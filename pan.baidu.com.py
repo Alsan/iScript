@@ -101,7 +101,7 @@ archivetype = [
     ".zoo", ".zpaq", ".zz"
 ]
 
-s = '\x1b[%s;%sm%s\x1b[0m'       # terminual color template
+s = '\x1b[%s;%sm%s\x1b[0m'       # terminal color template
 
 cookie_file = os.path.join(os.path.expanduser('~'), '.bp.cookies')
 upload_datas_path = os.path.join(os.path.expanduser('~'), '.bp.pickle')
