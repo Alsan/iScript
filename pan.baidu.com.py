@@ -21,6 +21,13 @@ import rsa
 from zlib import crc32
 import cStringIO
 import signal
+import sh
+
+try:
+	display = sh.Command('display') # use imagemagick to display the captcha
+except:
+	print '请先安装ImageMagick'
+	sys.exit(1)
 
 ############################################################
 # Defines that should never be changed
@@ -291,13 +298,16 @@ class panbaiducom_HOME(object):
 
     @staticmethod
     def save_img(url, ext):
-        path = os.path.join(os.path.expanduser('~'), 'vcode.%s' % ext)
+        path = os.path.join(conf['vcode path'] if None != conf['vcode path'] else os.path.expanduser('~'), 'vcode.%s' % ext)
         with open(path, 'w') as g:
             res = ss.get(url)
             data = res.content
             g.write(data)
-        print "  ++ 验证码已保存至", s % (1, 97, path)
+        # print "  ++ 验证码已保存至", s % (1, 97, path)
+
+        display(path)
         input_code = raw_input(s % (2, 92, "  输入验证码: "))
+        os.remove(path)
         return input_code
 
     def check_login(self):
@@ -3003,8 +3013,10 @@ def handle_command(comd, xxx):
         xh = panbaiducom_HOME()
 
         if len(xxx) < 1:
-            username = raw_input(s % (1, 97, '  username: '))
-            password = getpass(s % (1, 97, '  password: '))
+            # username = raw_input(s % (1, 97, '  username: '))
+            # password = getpass(s % (1, 97, '  password: '))
+            username = conf['user']
+            password = conf['passwd']
         elif len(xxx) == 1:
             username = xxx[0]
             password = getpass(s % (1, 97, '  password: '))
@@ -3460,13 +3472,22 @@ def handle_command(comd, xxx):
     elif 'px' in locals():
         px.save_cookies(on=1, tocwd=True)
 
+def load_conf():
+	import anyconfig
+	from os import path
+
+	conf_path = path.join(path.expanduser('~'), '.pan.baidu.conf')
+	if path.exists(conf_path): return anyconfig.load(conf_path, ac_parser='yaml')
+
+conf = load_conf()
+
 def main(argv):
     handle_signal()
 
-    usage = "usage: https://github.com/PeterDing/iScript#pan.baidu.com.py"
-    if len(argv) <= 1:
-        print usage
-        sys.exit()
+    # usage = "usage: https://github.com/PeterDing/iScript#pan.baidu.com.py"
+    # if len(argv) <= 1:
+    #     print usage
+    #     sys.exit()
 
     comd, xxx = handle_args(argv)
     handle_command(comd, xxx)
