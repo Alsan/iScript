@@ -290,7 +290,10 @@ class panbaiducom_HOME(object):
                 sys.exit(1)
 
             if not self.check_login():
-                print s % (1, 91, '  !! cookie is invalid, please login\n'), u[0]
+                print s % (1, 91, '  !! cookie is invalid, please login.'), u[0]
+                del j[u[0]]
+                with open(cookie_file, 'w') as g:
+                    pk.dump(j, g)
                 sys.exit(1)
         else:
             print s % (1, 97, '  no account, please login')
@@ -404,7 +407,7 @@ class panbaiducom_HOME(object):
                 t = re.search('codeString=(.+?)&', r.content)
                 codestring = t.group(1) if t else ""
                 vcurl = 'https://passport.baidu.com/cgi-bin/genimage?'+codestring
-                verifycode = self.save_img(vcurl, 'gif') if codestring != "" else ""
+                verifycode = self.save_img(vcurl, 'jpg') if codestring != "" else ""
                 data['codestring'] = codestring
                 data['verifycode'] = verifycode
                 #self.save_cookies()
@@ -2457,19 +2460,20 @@ class panbaiducom_HOME(object):
     }
 
     def _task_display(self, infos):
+        cross_line = '—' * int(os.popen('tput cols').read())
         template = '%s %s\n' \
                    '%s %s\n' \
                    '%s %s\n' \
                    '%s %s\n' \
                    '%s %s\n' \
                    '%s %s\n' \
-                   '------------------------------\n' \
-                   % (s % (2, 97, '     id:'), s % (1, 97, "%s"), \
-                      s % (1, 97, ' status:'), s % (2, "%s", "%s"), \
-                      s % (1, 97, '   done:'), s % (3, 93, "%s"), \
-                      s % (2, 97, '   name:'), "%s", \
-                      s % (2, 97, '   path:'), "%s", \
-                      s % (2, 97, ' source:'), "%s")
+                   '%s\n' \
+                   % (s % (2, 97, '    id:'), s % (1, 97, "%s"), \
+                      s % (1, 97, 'status:'), s % (1, "%s", "%s"), \
+                      s % (1, 97, '  done:'), s % (2, 93, "%s"), \
+                      s % (2, 97, '  name:'), "%s", \
+                      s % (2, 97, '  path:'), "%s", \
+                      s % (2, 97, 'source:'), "%s", cross_line)
 
         for i in infos:
             if i['result'] == 0:
@@ -2791,16 +2795,16 @@ class panbaiducom(object):
             t = t.replace('\\\\', '!@#$%^'*10)
             t = t.replace('\\', '')
             t = t.replace('!@#$%^'*10, '\\')
-            info['fileinfo'] = t
+            info['fileinfo']  = t
             info['timestamp'] = re.search(r'timestamp="(\d+)"', cm).group(1)
-            info['sign'] = re.search(r'downloadsign="(.+?)"', cm).group(1)
+            info['sign']      = re.search(r'downloadsign="(.+?)"', cm).group(1)
         else:
-            info['uk']       = re.search(r'yunData\.MYUK = "(\d+)"', cm).group(1)
-            info['shareid']  = re.search(r'yunData\.SHARE_ID = "(\d+)"', cm).group(1)
-            info['bdstoken'] = re.search(r'yunData\.MYBDSTOKEN = "(.*?)"', cm).group(1)
-            info['fileinfo'] = re.search(r'yunData.FILEINFO = (.+)', cm).group(1)[:-2]
+            info['uk']        = re.search(r'yunData\.MYUK = "(\d+)"', cm).group(1)
+            info['shareid']   = re.search(r'yunData\.SHARE_ID = "(\d+)"', cm).group(1)
+            info['bdstoken']  = re.search(r'yunData\.MYBDSTOKEN = "(.*?)"', cm).group(1)
+            info['fileinfo']  = re.search(r'yunData.FILEINFO = (.+)', cm).group(1)[:-2]
             info['timestamp'] = re.search(r'yunData.TIMESTAMP = "(.+?)"', cm).group(1)
-            info['sign'] = re.search(r'yunData.SIGN = "(.+?)"', cm).group(1)
+            info['sign']      = re.search(r'yunData.SIGN = "(.+?)"', cm).group(1)
 
         return info
 
@@ -3059,7 +3063,7 @@ def handle_command(comd, xxx):
                 if comd == 'userdelete' or comd == 'ud':
                     if u != 'ALL':
                         if accounts[u]['on'] and len(accounts) > 1:
-                            print s % (1, 91, '  !! %s is online. To delete the account, firstly changing another account' % u)
+                            print s % (1, 91, '  !! %s is online. To delete the account, firstly switching to other account' % u)
                             sys.exit()
                         del accounts[u]
                     else:
@@ -3126,6 +3130,9 @@ def handle_command(comd, xxx):
             print s % (1, 91, '  !! 参数错误\n download path1 .. url1 ..\n' \
                 '  d url1 url2 ..')
             sys.exit(1)
+
+        # login session
+        panbaiducom_HOME().init()
 
         if comd == 'p' or comd == 'play': args.play = True
 
