@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/pypy
 # vim: set fileencoding=utf8
 
 from __future__ import unicode_literals
