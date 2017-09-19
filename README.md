@@ -1,28 +1,27 @@
 ## iScript
 
+[![Join the chat at https://gitter.im/PeterDing/iScript](https://badges.gitter.im/PeterDing/iScript.svg)](https://gitter.im/PeterDing/iScript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > *[L]* *[W]* *[LW]* 分别表示，在linux, windows, linux和windows 下通过测试。
 
 
 > ***windows用户可在babun (https://github.com/babun/babun) 下运行。***
 
-        |         |         |
---------|---------|---------|
-*[L]* | [leetcode_problems.py](#leetcode_problems.py)                   | 下载Leetcode的算法题 |
-*[L]* | [xiami.py](#xiami.py)                                           | 下载或播放高品质虾米音乐(xiami.com) |
-*[L]* | [pan.baidu.com.py](#pan.baidu.com.py)                           | 百度网盘的下载、离线下载、上传、播放、转存、文件操作 |
-*[L]* | [bt.py](#bt.py)                                                 | magnet torrent 互转、及 过滤敏.感.词 |
-*[L]* | [115.py](#115.py)                                               | 115网盘的下载和播放 |
-*[L]* | [yunpan.360.cn.py](#yunpan.360.cn.py)                           | 360网盘的下载 |
-*[L]* | [music.baidu.com.py](#music.baidu.com.py)                       | 下载或播放高品质百度音乐(music.baidu.com) |
-*[L]* | [music.163.com.py](#music.163.com.py)                           | 下载或播放高品质网易音乐(music.163.com) |
-*[L]* | [flv_cmd.py](#flv_cmd.py)                                     | 基于在线服务的视频解析 client - 支持下载、播放 |
-*[L]* | [tumblr.py](#tumblr.py)                                         | 下载某个tumblr.com的所有图片、视频、音频 |
-*[L]* | [unzip.py](#unzip.py)                                           | 解决linux下unzip乱码的问题 |
-*[L]* | [ed2k_search.py](#ed2k_search.py)                               | 基于 donkey4u.com 的emule搜索 |
-*[L]* | [91porn.py](#91porn.py)                                         | 下载或播放91porn |
-*[L]* | [ThunderLixianExporter.user.js](#ThunderLixianExporter.user.js) | A fork of https://github.com/binux/ThunderLixianExporter - 增加了mpv和mplayer的导出。 |
-    | 待续                                                            |         |
----
+
+*[L]* - [leetcode_problems.py](#leetcode_problems.py) - 下载Leetcode的算法题  
+*[L]* - [xiami.py](#xiami.py) - 下载或播放高品质虾米音乐(xiami.com)  
+*[L]* - [pan.baidu.com.py](#pan.baidu.com.py) - 百度网盘的下载、离线下载、上传、播放、转存、文件操作  
+*[L]* - [bt.py](#bt.py) - magnet torrent 互转、及 过滤敏.感.词  
+*[L]* - [115.py](#115.py) - 115网盘的下载和播放  
+*[L]* -  [yunpan.360.cn.py](#yunpan.360.cn.py) - 360网盘的下载  
+*[L]* - [music.baidu.com.py](#music.baidu.com.py) - 下载或播放高品质百度音乐(music.baidu.com)  
+*[L]* - [music.163.com.py](#music.163.com.py) - 下载或播放高品质网易音乐(music.163.com)  
+*[L]* - [flv_cmd.py](#flv_cmd.py) - 基于在线服务的视频解析 client - 支持下载、播放  
+*[L]* - [tumblr.py](#tumblr.py) - 下载某个tumblr.com的所有图片、视频、音频  
+*[L]* - [unzip.py](#unzip.py) - 解决linux下unzip乱码的问题  
+*[L]* - [ed2k_search.py](#ed2k_search.py) - 基于 donkey4u.com 的emule搜索  
+*[L]* - [91porn.py](#91porn.py) - 下载或播放91porn  
+*[L]* - [ThunderLixianExporter.user.js](#ThunderLixianExporter.user.js) -  A fork of https://github.com/binux/ThunderLixianExporter - 增加了mpv和mplayer的导出。  
 
 ---
 
@@ -214,19 +213,16 @@ wget
 
 aria2  (~ 1.18)
 
-python2-rsa
+aget # 需要 python >= 3.5, 安装 pip3 install aget
 
-python2-pyasn1
-
-python2-requests (https://github.com/kennethreitz/requests)
-
-requests-toolbelt (https://github.com/sigmavirus24/requests-toolbelt)
+pip2 install rsa pyasn1 requests requests-toolbelt
 
 mpv (http://mpv.io)
 
 # 可选依赖
 shadowsocks  # 用于加密上传。
              # 用 python2 的 pip 安装
+pip2 install shadowsocks
 
 # 除了用pip安装包，还可以手动:
 https://github.com/PeterDing/iScript/wiki/%E6%89%8B%E5%8A%A8%E8%A7%A3%E5%86%B3pan.baidu.com.py%E4%BE%9D%E8%B5%96%E5%8C%85
@@ -244,6 +240,8 @@ pan.baidu.com.py 是一个百度网盘的命令行客户端。
 
 **支持多帐号登录**
 
+**支持cookie登录**
+
 **支持加密上传**, 需要 shadowsocks
 
 **cd, ls 功能完全支持**
@@ -253,6 +251,8 @@ pan.baidu.com.py 是一个百度网盘的命令行客户端。
 他人分享的网盘连接，只支持单个的下载。
 
 下载工具默认为wget, 可用参数-a num选用aria2
+
+**支持用 aget 加速下载, 用法见下**
 
 下载的文件，保存在当前目录下。
 
@@ -288,6 +288,7 @@ g
 login
 login username
 login username password
+login username cookie
 
 # 删除帐号
 userdelete 或 ud
@@ -435,7 +436,11 @@ jca 或 jobclearall                      # 清除 *全部任务*
 #### 参数:
 
 ```
--a num, --aria2c num                aria2c分段下载数量: eg: -a 10
+-a num, --aria2c num                aria2c 分段下载数量: eg: -a 10
+-g num, --aget_s num                aget 分段下载数量: eg: -g 100
+-k num, --aget_k size               aget 分段大小: eg: -k 200K
+                                                       -k 1M
+                                                       -k 2M
 -p, --play                          play with mpv
 -P password, --passwd password      分享密码，加密密码
 -y, --yes                           yes # 用于 rmre, mvre, cpre, rnre ！！慎用
@@ -502,6 +507,16 @@ bp login username password
 # 一直用 bp login 即可
 ```
 
+#### cookie 登录:
+
+1.  打开 chrome 隐身模式窗口  
+2.  在隐身模式窗口登录 pan.baidu.com  
+3.  在登录后的页面打开 chrome 开发者工具(怎么打开自行google)，选择 `Network` ，然后刷新页面。在刷新后的 `Network` 的 `Name` 列表中选中 `list?dir=…` 开头的一项，然后在右侧找到 `Cookie:` ，复制 `Cookie:` 后面的所有内容。  
+4.  用 `pan.baidu.com.py` 登录，`password / cookie:` 处粘贴上面复制的内容。（粘贴后是看不见的）。  
+5.  不要退出 pan.baidu.com，只是关闭隐身模式窗口就可以。  
+
+> 如果使用 cookie 登录，`username` 可以是任意的东西。
+
 #### 删除帐号:
 
 ```
@@ -567,10 +582,16 @@ bp d 'http://pan.baidu.com/share/link?shareid=1622654699&uk=1026372002&fid=21126
 # 下载别人加密分享的*单个文件*，密码参数-s
 bp d http://pan.baidu.com/s/1i3FVlw5 -s vuej
 
-# 用aria2下载
+# 用aria2 下载
 bp d http://pan.baidu.com/s/1i3FVlw5 -s vuej -a 5
 bp d /movie/her.mkv -a 4
 bp d url -s [secret] -a 10
+
+# 用 aget 下载
+bp d http://pan.baidu.com/s/1i3FVlw5 -s vuej -g 100
+bp d /movie/her.mkv -g 100 -k 200K
+bp d url -s [secret] -g 100 -k 100K
+如果下载速度很慢，可以试试加大 -g, 减小 -k, -k 一般在 100K ~ 300K 之间合适
 
 # 下载并解码
 ## 默认加密方法为 aes-256-cfb
